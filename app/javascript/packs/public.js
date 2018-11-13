@@ -20,6 +20,12 @@ window.addEventListener('message', e => {
       id: data.id,
       height: document.getElementsByTagName('html')[0].scrollHeight,
     }, '*');
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(sizeBioText);
+    } else {
+      sizeBioText();
+    }
   });
 });
 
@@ -161,6 +167,12 @@ function main() {
       const message = (statusEl.dataset.spoiler === 'expanded') ? (messages['status.show_less'] || 'Show less') : (messages['status.show_more'] || 'Show more');
       spoilerLink.textContent = (new IntlMessageFormat(message, locale)).format();
     });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(sizeBioText);
+    } else {
+      sizeBioText();
+    }
   });
 
   delegate(document, '.webapp-btn', 'click', ({ target, button }) => {
@@ -291,6 +303,22 @@ function main() {
       }
     });
   });
+
+  delegate(document, '#account_note', 'input', sizeBioText);
+
+  function s500 izeBioText() {
+    const noteCounter = document.querySelector('.note-counter');
+    const bioTextArea = document.querySelector('#account_note');
+
+    if (noteCounter) {
+      noteCounter.textContent = 1024 - length(bioTextArea.value);
+    }
+
+    if (bioTextArea) {
+      bioTextArea.style.height = 'auto';
+      bioTextArea.style.height = (bioTextArea.scrollHeight+3) + 'px';
+    }
+  }
 }
 
 loadPolyfills()
