@@ -98,7 +98,7 @@ class ActivityPub::Activity
     crawl_links(status)
 
     notify_about_reblog(status) if reblog_of_local_account?(status) && !reblog_by_following_group_account?(status)
-    notify_about_mentions(status)
+    notify_about_mentions(status) unless spammy_mentions?(status)
 
     # Only continue if the status is supposed to have arrived in real-time.
     # Note that if @options[:override_timestamps] isn't set, the status
@@ -115,6 +115,11 @@ class ActivityPub::Activity
 
   def reblog_by_following_group_account?(status)
     status.reblog? && status.account.group? && status.reblog.account.following?(status.account)
+  end
+
+  def spammy_mentions?(status)
+    status.has_non_mention_links? &&
+    @account.followers.local.count == 0
   end
 
   def notify_about_reblog(status)
