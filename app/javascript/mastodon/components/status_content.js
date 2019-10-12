@@ -193,6 +193,7 @@ export default class StatusContent extends React.PureComponent {
 
     const showThreadButton = (
       <button className='status__content__read-more-button' onClick={this.props.onClick}>
+        <i className='fa fa-fw fa-sort-amount-desc status__prepend-icon' />
         <FormattedMessage id='status.show_thread' defaultMessage='Show thread' />
       </button>
     );
