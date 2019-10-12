@@ -1333,7 +1333,8 @@ en:
   themes:
     contrast: Mastodon (High contrast)
     default: Mastodon (Dark)
-    mastodon-light: Mastodon (Light)
+    mastodon-light: Mastodon (light)
+    win95: Windows 95
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
