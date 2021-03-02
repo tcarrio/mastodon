@@ -88,8 +88,8 @@ class Account < ApplicationRecord
   validates :username, format: { with: /\A[a-z0-9_]+\z/i }, length: { maximum: 30 }, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
   validates_with UnreservedUsernameValidator, if: -> { local? && will_save_change_to_username? }
   validates :display_name, length: { maximum: 30 }, if: -> { local? && will_save_change_to_display_name? }
-  validates :note, note_length: { maximum: 500 }, if: -> { local? && will_save_change_to_note? }
-  validate :note_has_eight_newlines?, if: -> { local? && will_save_change_to_note? }
+  validates :note, note_length: { maximum: 1024 }, if: -> { local? && will_save_change_to_note? }
+  validate :note_has_ten_newlines?, if: -> { local? && will_save_change_to_note? }
   validates :fields, length: { maximum: 4 }, if: -> { local? && will_save_change_to_fields? }
 
   scope :remote, -> { where.not(domain: nil) }
@@ -384,8 +384,8 @@ class Account < ApplicationRecord
     @synchronization_uri_prefix ||= uri[/http(s?):\/\/[^\/]+\//]
   end 
   
-  def note_has_eight_newlines?
-    errors.add(:note, 'Bio can\'t have more then 8 newlines') unless note.count("\n") <= 8
+  def note_has_ten_newlines?
+    errors.add(:note, 'Bio can\'t have more then 10 newlines') unless note.count("\n") <= 10
   end
 
   class Field < ActiveModelSerializers::Model
