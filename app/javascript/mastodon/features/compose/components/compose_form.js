@@ -86,7 +86,7 @@ class ComposeForm extends ImmutablePureComponent {
     const fulltext = this.getFulltextForCharacterCounting();
     const isOnlyWhitespace = fulltext.length !== 0 && fulltext.trim().length === 0;
 
-    return !(isSubmitting || isUploading || isChangingUpload || length(fulltext) > 500 || (isOnlyWhitespace && !anyMedia));
+    return !(isSubmitting || isUploading || isChangingUpload || length(fulltext) > 1024 || (isOnlyWhitespace && !anyMedia));
   }
 
   handleSubmit = () => {
@@ -96,15 +96,7 @@ class ComposeForm extends ImmutablePureComponent {
       this.props.onChange(this.autosuggestTextarea.textarea.value);
     }
 
-<<<<<<< HEAD
     if (!this.canSubmit()) {
-=======
-    // Submit disabled:
-    const { isSubmitting, isChangingUpload, isUploading, anyMedia } = this.props;
-    const fulltext = [this.props.spoilerText, countableText(this.props.text)].join('');
-
-    if (isSubmitting || isUploading || isChangingUpload || length(fulltext) > 1024 || (fulltext.length !== 0 && fulltext.trim().length === 0 && !anyMedia)) {
->>>>>>> Feature: 1024-character posts in server and client
       return;
     }
 
@@ -196,11 +188,6 @@ class ComposeForm extends ImmutablePureComponent {
   render () {
     const { intl, onPaste, showSearch } = this.props;
     const disabled = this.props.isSubmitting;
-<<<<<<< HEAD
-=======
-    const text     = [this.props.spoilerText, countableText(this.props.text)].join('');
-    const disabledButton = disabled || this.props.isUploading || this.props.isChangingUpload || length(text) > 1024 || (text.length !== 0 && text.trim().length === 0 && !anyMedia);
->>>>>>> Feature: 1024-character posts in server and client
     let publishText = '';
 
     if (this.props.privacy === 'private' || this.props.privacy === 'direct') {
