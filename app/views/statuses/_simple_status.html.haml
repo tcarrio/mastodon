@@ -60,7 +60,6 @@
         = fa_icon 'reply fw'
       - else
         = fa_icon 'reply-all fw'
-      %span.icon-button__counter= obscured_counter status.replies_count
     = link_to remote_interaction_path(status, type: :reblog), class: 'status__action-bar-button icon-button modal-button' do
       - if status.distributable?
         = fa_icon 'retweet fw'

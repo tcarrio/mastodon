@@ -351,6 +351,14 @@ class Status < ApplicationRecord
     super || build_status_stat
   end
 
+  def has_non_mention_links?
+    if local?
+      text.match? %r{https?://\w}
+    else
+      Nokogiri::HTML.fragment(text).css('a:not(.mention)').present?
+    end
+  end
+
   private
 
   def update_status_stat!(attrs)

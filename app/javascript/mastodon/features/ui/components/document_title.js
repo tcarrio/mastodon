@@ -23,15 +23,7 @@ class DocumentTitle extends PureComponent {
   }
 
   _sideEffects () {
-    const { unread } = this.props;
-
-    if (unread > 99) {
-      document.title = `(*) ${title}`;
-    } else if (unread > 0) {
-      document.title = `(${unread}) ${title}`;
-    } else {
-      document.title = title;
-    }
+    document.title = title;
   }
 
   render () {

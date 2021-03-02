@@ -20,6 +20,12 @@ window.addEventListener('message', e => {
       id: data.id,
       height: document.getElementsByTagName('html')[0].scrollHeight,
     }, '*');
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(sizeBioText);
+    } else {
+      sizeBioText();
+    }
   });
 });
 
@@ -142,6 +148,7 @@ function main() {
     delegate(document, '.custom-emoji', 'mouseover', getEmojiAnimationHandler('data-original'));
     delegate(document, '.custom-emoji', 'mouseout', getEmojiAnimationHandler('data-static'));
 
+<<<<<<< HEAD
     delegate(document, '.status__content__spoiler-link', 'click', function() {
       const statusEl = this.parentNode.parentNode;
 
@@ -161,6 +168,26 @@ function main() {
       const message = (statusEl.dataset.spoiler === 'expanded') ? (messages['status.show_less'] || 'Show less') : (messages['status.show_more'] || 'Show more');
       spoilerLink.textContent = (new IntlMessageFormat(message, locale)).format();
     });
+=======
+    if (document.body.classList.contains('with-modals')) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      const scrollbarWidthStyle = document.createElement('style');
+      scrollbarWidthStyle.id = 'scrollbar-width';
+      document.head.appendChild(scrollbarWidthStyle);
+      scrollbarWidthStyle.sheet.insertRule(`body.with-modals--active { margin-right: ${scrollbarWidth}px; }`, 0);
+    }
+
+    [].forEach.call(document.querySelectorAll('[data-component="Card"]'), (content) => {
+      const props = JSON.parse(content.getAttribute('data-props'));
+      ReactDOM.render(<CardContainer locale={locale} {...props} />, content);
+    });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(sizeBioText);
+    } else {
+      sizeBioText();
+    }
+>>>>>>> Bio length -> 500 characters
   });
 
   delegate(document, '.webapp-btn', 'click', ({ target, button }) => {
@@ -291,6 +318,22 @@ function main() {
       }
     });
   });
+
+  delegate(document, '#account_note', 'input', sizeBioText);
+
+  function sizeBioText() {
+    const noteCounter = document.querySelector('.note-counter');
+    const bioTextArea = document.querySelector('#account_note');
+
+    if (noteCounter) {
+      noteCounter.textContent = 500 - length(bioTextArea.value);
+    }
+
+    if (bioTextArea) {
+      bioTextArea.style.height = 'auto';
+      bioTextArea.style.height = (bioTextArea.scrollHeight+3) + 'px';
+    }
+  }
 }
 
 loadPolyfills()
