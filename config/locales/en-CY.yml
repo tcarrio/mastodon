@@ -42,7 +42,10 @@ en-CY:
     nothing_here: There is nothing here!
     people_followed_by: People whom %{name} follows
     people_who_follow: People who follow %{name}
-    posts: Pings
+    posts:
+      one: Ping
+      other: Pings
+    posts_tab_heading: Pings
     posts_with_replies: Pings with replies
     remote_follow: Remote follow
     reserved_username: The username is reserved
