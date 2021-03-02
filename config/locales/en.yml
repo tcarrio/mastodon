@@ -1335,6 +1335,7 @@ en:
     default: Cybrespace
     mastodon: Mastodon
     mastodon-light: Mastodon (light)
+    light: Cybre Lite
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
