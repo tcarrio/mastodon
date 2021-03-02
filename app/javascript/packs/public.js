@@ -306,7 +306,7 @@ function main() {
 
   delegate(document, '#account_note', 'input', sizeBioText);
 
-  function s500 izeBioText() {
+  function sizeBioText() {
     const noteCounter = document.querySelector('.note-counter');
     const bioTextArea = document.querySelector('#account_note');
 
