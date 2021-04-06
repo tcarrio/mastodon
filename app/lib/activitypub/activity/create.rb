@@ -253,7 +253,8 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
       rescue Mastodon::UnexpectedResponseError, HTTP::TimeoutError, HTTP::ConnectionError, OpenSSL::SSL::SSLError
         RedownloadMediaWorker.perform_in(rand(30..600).seconds, media_attachment.id)
       rescue Seahorse::Client::NetworkingError
-        nil
+        Rails.logger.info "Ran into seahorse networking error on MEDIA:#{media_attachment.id} for STATUS:#{media_attachment.status_id}"
+        RedownloadMediaWorker.perform_in(rand(30..600).seconds, media_attachment.id)
       end
     end
 
